@@ -53,6 +53,7 @@ import departmentRoute from './routes/admin/department.route.js';
 import designationRoute from './routes/admin/designation.route.js';
 import { ApiResponse } from './utils/ApiResponse.js';  // Ensure ApiResponse is imported for error handling
 import valRoute from './routes/admin/validate.routes.js';
+// import fileRouter from './routes/admin/file.routes.js';
 
 const app = express();
 
@@ -73,6 +74,9 @@ app.use("/zarud-admin/api/v1/leave", leaveRoute);
 app.use("/zarud-admin/api/v1/validation",valRoute);
 app.use('/zarud-admin/api/v1/department', departmentRoute);
 app.use('/zarud-admin/api/v1/designation', designationRoute);
+// app.use('/zarud-admin/api/v1/download', fileRouter);
+
+
 // Global error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);  // Log the error stack trace
