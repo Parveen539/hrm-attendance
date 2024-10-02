@@ -1,7 +1,7 @@
-// // import { Router } from "express";
-// // import { dbDownload } from "../../controllers/admin/download.controller";
-// const fileRouter=Router();
+import { Router } from "express";
 
-// // // fileRouter.route("/database/").post(dbDownload)
+const fileRouter=Router();
 
-// export default fileRouter;
+// fileRouter.route("/database/").post(dbDownload)
+
+export default fileRouter;
