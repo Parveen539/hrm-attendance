@@ -50,7 +50,7 @@ import connectDB from './config/db.js';
 import employeeRoute from './routes/admin/employee.routes.js';
 import leaveRoute from './routes/admin/leave.routes.js' 
 import departmentRoute from './routes/admin/department.route.js';
-// import designationRoute from './routes/admin/designation.route.js';
+import designationRoute from './routes/admin/designation.route.js';
 import { ApiResponse } from './utils/ApiResponse.js';  // Ensure ApiResponse is imported for error handling
 import valRoute from './routes/admin/validate.routes.js';
 
@@ -72,7 +72,7 @@ app.use("/zarud-admin/api/v1/employee", employeeRoute);
 app.use("/zarud-admin/api/v1/leave", leaveRoute);
 app.use("/zarud-admin/api/v1/validation",valRoute);
 app.use('/zarud-admin/api/v1/department', departmentRoute);
-// app.use('/zarud-admin/api/v1/designation', designationRoute);
+app.use('/zarud-admin/api/v1/designation', designationRoute);
 // Global error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);  // Log the error stack trace

@@ -11,7 +11,10 @@ const saveUpdateDepartment = asyncHandler(async (req, res) => {
     if (!departmentName) {
         return res.status(400).json(new ApiResponse(400, null, "Department name is required."));
     }
-
+// Validate if dbId is a valid integer when provided
+if (dbId && !Number.isInteger(dbId)) {
+    return res.status(400).json(new ApiResponse(400, null, "Invalid department ID."));
+}
     try {
         const connection = connectDB();
         
@@ -22,7 +25,7 @@ const saveUpdateDepartment = asyncHandler(async (req, res) => {
         }
 
         // Update if dbId exists, otherwise create a new department
-        const response = dbId 
+        const response = dbId
             ? await update('department', { name: departmentName }, { id: dbId }, connection)
             : await create('department', { name: departmentName }, connection);
 
@@ -43,10 +46,8 @@ const deleteDepartment = asyncHandler(async (req, res) => {
     const { dbId } = req.params;
 
     // Validate department ID
-    if (!dbId) {
-        return res.status(400).json(new ApiResponse(400, null, 'Invalid department id.'));
-    }
-
+    if (!dbId || (dbId && !Number.isInteger(dbId))) return res.status(400).json(new ApiResponse(400, null, 'Invalid department id.'));
+    
     try {
         const connection = connectDB();
         const response = await remove('department', { id: dbId }, connection);
@@ -64,7 +65,6 @@ const deleteDepartment = asyncHandler(async (req, res) => {
 });
 
 const retrieveALlDepartment = asyncHandler(async(req, res) => {
-    const {dbId} = req.params;
     try {
         const connection = connectDB();
         const response = await read('department', [], connection);
@@ -76,7 +76,7 @@ const retrieveALlDepartment = asyncHandler(async(req, res) => {
 });
 const retrieveALlDepartmentById = asyncHandler(async(req, res) => {
     const {dbId} = req.params;
-    if(!dbId) return res.status(400).json(new ApiResponse(200, [], "Department id is required."));
+    if(!dbId || (dbId && !Number.isInteger(dbId))) return res.status(400).json(new ApiResponse(200, [], "Department id is required."));
     try {
         const connection = connectDB();
         const data = dbId ? {id: dbId} : null;
