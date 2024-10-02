@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
-import mysql, { createConnection } from 'mysql';
+//import mysql, { createConnection } from 'mysql';
+import mysql2, { createConnection } from 'mysql2';
 
 // Load environment variables from the .env file
 dotenv.config({ path: '.env' });

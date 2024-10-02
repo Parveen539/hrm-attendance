@@ -67,7 +67,7 @@ export const create = (table, data, connection) => {
 
         const placeholders = columns.map(() => '?').join(', ');
         const sql = `INSERT INTO ${mysql.escapeId(table)} (${columns.join(', ')}) VALUES (${placeholders})`;
-
+        
         connection.query(sql, values, (err, result) => {
             if (err) {
                 console.error('Error inserting data:', err);
