@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 /**
  * @function filterData
  * @description Sanitizes input data by trimming whitespace, removing backslashes, 
