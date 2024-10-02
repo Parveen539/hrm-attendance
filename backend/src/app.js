@@ -50,6 +50,7 @@ import connectDB from './config/db.js';
 import employeeRoute from './routes/admin/employee.routes.js';
 import leaveRoute from './routes/admin/leave.routes.js' 
 import { ApiResponse } from './utils/ApiResponse.js';  // Ensure ApiResponse is imported for error handling
+import valRoute from './routes/admin/validate.routes.js';
 
 const app = express();
 
@@ -67,6 +68,7 @@ app.use(morgan('dev'));  // Log HTTP requests in development mode
 // Mount employee-related routes under the `/zarud-admin/api/v1/employee` namespace
 app.use("/zarud-admin/api/v1/employee", employeeRoute);
 app.use("/zarud-admin/api/v1/leave", leaveRoute);
+app.use("/zarud-admin/api/v1/validation",valRoute);
 
 // Global error handling middleware
 app.use((err, req, res, next) => {
