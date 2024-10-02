@@ -53,4 +53,5 @@ const deleteDepartment = asyncHandler(async(req, res) => {
         return res.status(500).json(new ApiResponse(500, null, "Internal server error."));
     }
 })
+
 export { saveUpdateDepartment, deleteDepartment };

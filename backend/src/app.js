@@ -72,6 +72,8 @@ app.use("/zarud-admin/api/v1/employee", employeeRoute);
 app.use("/zarud-admin/api/v1/leave", leaveRoute);
 app.use("/zarud-admin/api/v1/validation",valRoute);
 app.use('/zarud-admin/api/v1/department', departmentRoute);
+//Below is temporaryily, to be removed.
+app.use('/zarud-admin/api/v1/create', departmentRoute);
 // app.use('/zarud-admin/api/v1/designation', designationRoute);
 // Global error handling middleware
 app.use((err, req, res, next) => {
