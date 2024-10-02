@@ -52,6 +52,7 @@ import leaveRoute from './routes/admin/leave.routes.js'
 import departmentRoute from './routes/admin/dapartment.route.js';
 // import designationRoute from './routes/admin/designation.route.js';
 import { ApiResponse } from './utils/ApiResponse.js';  // Ensure ApiResponse is imported for error handling
+import valRoute from './routes/admin/validate.routes.js';
 
 const app = express();
 
@@ -69,6 +70,7 @@ app.use(morgan('dev'));  // Log HTTP requests in development mode
 // Mount employee-related routes under the `/zarud-admin/api/v1/employee` namespace
 app.use("/zarud-admin/api/v1/employee", employeeRoute);
 app.use("/zarud-admin/api/v1/leave", leaveRoute);
+app.use("/zarud-admin/api/v1/validation",valRoute);
 app.use('/zarud-admin/api/v1/department', departmentRoute);
 // app.use('/zarud-admin/api/v1/designation', designationRoute);
 // Global error handling middleware
