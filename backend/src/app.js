@@ -49,6 +49,8 @@ import morgan from 'morgan';
 import connectDB from './config/db.js';
 import employeeRoute from './routes/admin/employee.routes.js';
 import leaveRoute from './routes/admin/leave.routes.js' 
+import departmentRoute from './routes/admin/dapartment.route.js';
+// import designationRoute from './routes/admin/designation.route.js';
 import { ApiResponse } from './utils/ApiResponse.js';  // Ensure ApiResponse is imported for error handling
 import valRoute from './routes/admin/validate.routes.js';
 
@@ -69,13 +71,12 @@ app.use(morgan('dev'));  // Log HTTP requests in development mode
 app.use("/zarud-admin/api/v1/employee", employeeRoute);
 app.use("/zarud-admin/api/v1/leave", leaveRoute);
 app.use("/zarud-admin/api/v1/validation",valRoute);
-
+app.use('/zarud-admin/api/v1/department', departmentRoute);
+// app.use('/zarud-admin/api/v1/designation', designationRoute);
 // Global error handling middleware
 app.use((err, req, res, next) => {
-    const statusCode = err instanceof ApiError ? err.statusCode : 500;  // Default to 500 if not ApiError
-    const message = err instanceof ApiError ? err.message : 'Something went wrong!';
     console.error(err.stack);  // Log the error stack trace
-    res.status(statusCode).json(new ApiResponse(statusCode, null, message));  // Send structured API response
+    res.status(500).json(new ApiResponse(500, null, "Something went wrong!"));  // Send structured API response
 });
 
 // Connect to the database and start the server
