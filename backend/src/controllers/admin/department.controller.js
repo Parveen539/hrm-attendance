@@ -1,6 +1,6 @@
 import { asyncHandler } from "../../utils/AsyncHandler.js";
 import { ApiResponse } from '../../utils/ApiResponse.js';
-import { create, read, update } from '../../utils/CrudHelper.js'; 
+import { create, read, remove, update } from '../../utils/CrudHelper.js'; 
 import connectDB from "../../config/db.js"; 
 
 const saveUpdateDepartment = asyncHandler(async (req, res) => {
@@ -38,4 +38,19 @@ const saveUpdateDepartment = asyncHandler(async (req, res) => {
     }
 });
 
-export { saveUpdateDepartment };
+const deleteDepartment = asyncHandler(async(req, res) => {
+    const {dbId} = req.params;
+    if(!dbId){
+        return res.status(400).json(new ApiResponse(400, null, 'Invalid department id.'));
+    }
+    try{
+        const connection = connectDB();
+        const response = await remove('department', {id: dbId}, connection);
+        if(!response) return res.status(400).json(new ApiResponse(400, null, "Failed to delete department."));
+        return res.status(200).json(new ApiResponse(200, null, "Department deleted successfully."));
+    }catch(error){
+        console.error('Error in deleteDepartment:', error);
+        return res.status(500).json(new ApiResponse(500, null, "Internal server error."));
+    }
+})
+export { saveUpdateDepartment, deleteDepartment };

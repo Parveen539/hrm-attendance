@@ -1,9 +1,9 @@
-    import { asyncHandler } from "../../utils/AsyncHandler.js";
-    import { ApiResponse } from '../../utils/ApiResponse.js';
-    //import { create } from '../../utils/CrudHelper.js';
-    import { create, executeCustomQuery } from '../../utils/CrudHelper2.js';
-    import connectDB from "../../config/db.js"; // Ensure connectDB handles the connection properly
-    //import { isEmpty } from "validator";
+import { asyncHandler } from "../../utils/AsyncHandler.js";
+import { ApiResponse } from '../../utils/ApiResponse.js';
+//import { create } from '../../utils/CrudHelper.js';
+import { create, executeCustomQuery } from '../../utils/CrudHelper2.js';
+import connectDB from "../../config/db.js"; // Ensure connectDB handles the connection properly
+//import { isEmpty } from "validator";
 
 const employeeRegister = asyncHandler(async (req, res) => {
     const { 

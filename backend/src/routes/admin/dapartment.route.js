@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { saveUpdateDepartment } from "../../controllers/admin/department.controller.js";
+import { saveUpdateDepartment, deleteDepartment } from "../../controllers/admin/department.controller.js";
 
-const department = Router();
+const departmentRoute = Router();
 // Save or update department
-department.route("/save-update-department").post(saveUpdateDepartment);
-
-export default department;
+departmentRoute.route("/save-update-department").post(saveUpdateDepartment);
+departmentRoute.route('delete-dapertment/:dbId').delete(deleteDepartment);
+export default departmentRoute;
