@@ -1,6 +1,6 @@
 import { asyncHandler } from "../../utils/AsyncHandler.js";
 import { ApiResponse } from '../../utils/ApiResponse.js';
-import { create, read, update } from '../../utils/CrudHelper2.js'; // Ensure you have the right import
+import { create, read, update } from '../../utils/CrudHelper.js'; // Ensure you have the right import
 import connectDB from "../../config/db.js"; 
 
 const saveUpdateDepartment = asyncHandler(async (req, res) => {
@@ -37,3 +37,4 @@ const saveUpdateDepartment = asyncHandler(async (req, res) => {
         return res.status(500).json(new ApiResponse(500, null, "Internal server error."));
     }
 });
+export {saveUpdateDepartment}

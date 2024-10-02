@@ -1,7 +1,8 @@
 import { Router } from "express";
+import { saveUpdateDepartment } from "../../controllers/admin/department.controller.js";
 
-const employeeRoute = Router();
+const department = Router();
 // Save Employee
-employeeRoute.route("/save-update-department/").get(employeeRetrieveAll);
+department.route("/save-update-department/").get(saveUpdateDepartment);
 
-export default employeeRoute;
+export default department;
