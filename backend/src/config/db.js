@@ -22,7 +22,7 @@ const connectDB = () => {
             setTimeout(connectDB, 2000);  // Retry after 2 seconds
         } else {
             console.log('Connected to the database');
-            // showTables(connection);
+            showTables(connection);
         }
     });
 
@@ -43,7 +43,7 @@ const showTables = (connection) => {
             console.log(`Table: ${tableName}`);
 
             // Fetch and log the columns of the current table
-            // showColumns(connection, tableName);
+            showColumns(connection, tableName);
         });
     });
 };
