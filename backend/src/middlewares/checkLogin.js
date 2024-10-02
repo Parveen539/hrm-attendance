@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken"
-
+//middleware to authenticate user login
 const checkLogin = (req, res,next) => {
 //recieving auth token from header and verifying it
   const authHeader = req.header("authorization");
