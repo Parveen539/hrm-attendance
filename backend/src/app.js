@@ -49,7 +49,7 @@ import morgan from 'morgan';
 import connectDB from './config/db.js';
 import employeeRoute from './routes/admin/employee.routes.js';
 import leaveRoute from './routes/admin/leave.routes.js' 
-import departmentRoute from './routes/admin/dapartment.route.js';
+import departmentRoute from './routes/admin/department.route.js';
 // import designationRoute from './routes/admin/designation.route.js';
 import { ApiResponse } from './utils/ApiResponse.js';  // Ensure ApiResponse is imported for error handling
 
