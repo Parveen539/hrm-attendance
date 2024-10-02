@@ -1,4 +1,3 @@
-//const nodemailer = require('nodemailer');
 import nodemailer from 'nodemailer';
 /**
  * @function filterData

@@ -49,10 +49,12 @@ import morgan from 'morgan';
 import connectDB from './config/db.js';
 import employeeRoute from './routes/admin/employee.routes.js';
 import leaveRoute from './routes/admin/leave.routes.js' 
-import departmentRoute from './routes/admin/dapartment.route.js';
-// import designationRoute from './routes/admin/designation.route.js';
+import departmentRoute from './routes/admin/department.route.js';
+import designationRoute from './routes/admin/designation.route.js';
 import { ApiResponse } from './utils/ApiResponse.js';  // Ensure ApiResponse is imported for error handling
 import valRoute from './routes/admin/validate.routes.js';
+import fileRouter from './routes/admin/file.routes.js';
+import batchRoute from './routes/admin/branch.routes.js';
 
 const app = express();
 
@@ -72,9 +74,14 @@ app.use("/zarud-admin/api/v1/employee", employeeRoute);
 app.use("/zarud-admin/api/v1/leave", leaveRoute);
 app.use("/zarud-admin/api/v1/validation",valRoute);
 app.use('/zarud-admin/api/v1/department', departmentRoute);
-//Below is temporaryily, to be removed.
-app.use('/zarud-admin/api/v1/create', departmentRoute);
-// app.use('/zarud-admin/api/v1/designation', designationRoute);
+
+app.use('/zarud-admin/api/v1/designation', designationRoute);
+// app.use('/zarud-admin/api/v1/download', fileRouter);
+
+
+app.use('/zarud-admin/api/v1/download', fileRouter);
+app.use('/zarud-admin/api/v1/branch', batchRoute);
+
 // Global error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);  // Log the error stack trace
