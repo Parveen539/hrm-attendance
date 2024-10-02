@@ -23,9 +23,12 @@
     "express": "^4.21.0",
     "from": "^0.1.7",
     "import": "^0.0.6",
+    "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "mysql2": "^3.11.3",
+    "nodemailer": "^6.9.15",
+    "smtp-server": "^3.13.5",
     "uuidv4": "^6.2.13",
     "validator": "^13.12.0"
   },

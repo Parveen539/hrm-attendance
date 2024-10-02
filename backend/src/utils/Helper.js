@@ -1,3 +1,4 @@
+const nodemailer = require('nodemailer');
 /**
  * @function filterData
  * @description Sanitizes input data by trimming whitespace, removing backslashes, 
@@ -33,6 +34,36 @@ export const filterData = (formData) => {
     }
     return formData;  // Return the sanitized input data
 };
+
+// Create reusable transporter object using Gmail SMTP
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.GMAIL_USER, // Gmail email from .env
+    pass: process.env.GMAIL_PASS, // Gmail App Password from .env
+  },
+});
+
+// Helper function to send an email
+export const sendEmail = async (to, subject, htmlContent) => {
+  const mailOptions = {
+    from: process.env.GMAIL_USER, // Sender address (from .env)
+    to: to, // Recipient email
+    subject: subject, // Email subject
+    html: htmlContent, // Email HTML content
+  };
+
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent: ' + info.response);
+    return info.response;
+  } catch (error) {
+    console.error('Error sending email:', error);
+    throw error;
+  }
+};
+
+
 
 /*
 git config --global user.email "you@example.com"

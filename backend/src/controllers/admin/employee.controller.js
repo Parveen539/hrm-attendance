@@ -3,19 +3,21 @@ import { ApiResponse } from '../../utils/ApiResponse.js';
 //import { create } from '../../utils/CrudHelper.js';
 import { create, executeCustomQuery } from '../../utils/CrudHelper2.js';
 import connectDB from "../../config/db.js"; // Ensure connectDB handles the connection properly
+import {sendEmail} from "../../utils/Helper.js"
 //import { isEmpty } from "validator";
 
 const employeeRegister = asyncHandler(async (req, res) => {
     const { 
         firstname, 
         lastname, 
+        email,
         departmentid, 
         roleid,
         employmenttype,
         joindate,
         casualleavebalance,
         earnedleavebalance,
-        status
+        status,
     } = req.body;
 
     // Input validation
@@ -23,28 +25,36 @@ const employeeRegister = asyncHandler(async (req, res) => {
     if (!joindate) return res.status(400).json(new ApiResponse(400, null, "Join Date is required."));
 
     try {
+        
+        const salt = await bcrypt.genSalt(10); //generating salt
+        const secPass = await bcrypt.hash(process.env.DEFAULT_PASSWORD, salt);
         const connection = connectDB(); 
+
         const result = await create(
             'employee',
             { 
                 first_name : firstname,
                 last_name : lastname,
+                EmailAddress:email,
                 department_id : departmentid,
                 role_id : roleid,
                 employment_type : employmenttype,
                 join_date : joindate,
                 casual_leave_balance : casualleavebalance,
                 earned_leave_balance : earnedleavebalance,
-                status : status
+                status : status,
+                password:secPass
             }, 
             connection
         );
         // Check if employee was created
         if (!result.affectedRows) return res.status(400).json(new ApiResponse(400, null, "Failed to register employee."));
-
+        const htmlTemptale=`<h1> Your Login details</h1><p>Email: ${email}</p><p>Password: ${process.env.DEFAULT_PASSWORD}</p><h4>Please Change Your Password upon login</h4>`
+        const mailRes=await sendEmail(email,"Welcome On Board",htmlTemptale)
         res.status(201).json({
             message: 'Employee registered successfully',
-            employee: { id: result.insertId, firstname, lastname }
+            employee: { id: result.insertId, firstname, lastname },
+            emailStatus:mailRes
         });
     } catch (error) {
         return res.status(500).json(new ApiResponse(500, null, "Internal server error."));
