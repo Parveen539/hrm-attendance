@@ -35,9 +35,6 @@ export const read = (table, conditions, connection) => {
             values.push(...Object.values(conditions)); // Spread operator to flatten the array
         }
 
-        console.log('SQL Query:', sql);
-        console.log('Values:', values);
-
         connection.query(sql, values, (err, result) => {
             if (err) {
                 console.error('Error reading data:', err);
