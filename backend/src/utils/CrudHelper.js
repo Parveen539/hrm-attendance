@@ -5,11 +5,14 @@ import mysql2 from 'mysql2';
  */
 export const create = (table, data, connection) => {
     return new Promise((resolve, reject) => {
+        
         const columns = Object.keys(data);
         const values = Object.values(data);
         const placeholders = columns.map(() => '?').join(', ');
         const sql = `INSERT INTO ${mysql2.escapeId(table)} (${columns.join(', ')}) VALUES (${placeholders})`;
         
+        
+
         connection.query(sql, values, (err, result) => {
             if (err) {
                 console.error('Error inserting data:', err);
@@ -90,6 +93,18 @@ export const remove = (table, conditions, connection) => {
 export const executeCustomQuery = (sql, data, connection) => {
     return new Promise((resolve, reject) => {
         connection.query(sql, data, (err, result) => {
+            if (err) {
+                console.error('Error executing query:', err);
+                return reject(err);
+            }
+            resolve(result);
+        });
+    });
+};
+
+export const executeCustomQueryWithoutData = (sql, connection) => {
+    return new Promise((resolve, reject) => {
+        connection.query(sql, (err, result) => {
             if (err) {
                 console.error('Error executing query:', err);
                 return reject(err);
