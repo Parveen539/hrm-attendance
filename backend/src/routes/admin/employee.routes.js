@@ -6,6 +6,6 @@ const employeeRoute = Router();
 employeeRoute.route("/retrieve-all-employees/").get(employeeRetrieveAll);
 employeeRoute.route("/retrieve-employee/").post(employeeRetrieveByID);
 employeeRoute.route("/employee-register/").post(employeeRegister);
-employeeRoute.route("/update-employee/").post(employeeUpdateByID);
+employeeRoute.route("/update-employee").post(employeeUpdateByID);
 
 export default employeeRoute;
