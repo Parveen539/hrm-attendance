@@ -102,8 +102,13 @@ app.use((err, req, res, next) => {
 // Connect to the database and start the server
 //*************Commented temporarily as DB not available */
 const dbConnection = connectDB();  // Establish DB connection
-
-// Start the server and listen on specified port or default to 3000
-app.listen(process.env.PORT || 3000, () => {
-    console.log(`Server is running on port ${process.env.PORT || 3000}`);
+dbConnection.connect((err) => {
+    if(err){
+        console.log('Database connection failed: ', err);
+        return;
+    }
+    // Start the server and listen on specified port or default to 3000
+    app.listen(process.env.PORT || 3000, () => {
+        console.log(`Server is running on port ${process.env.PORT || 3000}`);
+    });
 });

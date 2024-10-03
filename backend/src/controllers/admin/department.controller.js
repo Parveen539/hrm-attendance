@@ -50,7 +50,7 @@ const deleteDepartment = asyncHandler(async (req, res) => {
     
     try {
         const connection = connectDB();
-        const response = await remove('department', { id: dbId }, connection);
+        const response = await update('department', {deleteStatus: 1} ,{ id: dbId }, connection);
 
         // Check response for affected rows
         if (!response.affectedRows) {
@@ -67,7 +67,7 @@ const deleteDepartment = asyncHandler(async (req, res) => {
 const retrieveALlDepartment = asyncHandler(async(req, res) => {
     try {
         const connection = connectDB();
-        const response = await read('department', [], connection);
+        const response = await read('department', {deleteStatus: 0}, connection);
         return res.status(200).json(new ApiResponse(200, response, "Department retrieved successfully."))
     } catch (error) {
         console.error("Error in retrieving all department.");
@@ -79,8 +79,7 @@ const retrieveALlDepartmentById = asyncHandler(async(req, res) => {
     if(!dbId || (dbId && !Number.isInteger(dbId))) return res.status(400).json(new ApiResponse(200, [], "Department id is required."));
     try {
         const connection = connectDB();
-        const data = dbId ? {id: dbId} : null;
-        const response = await read('department', data, connection);
+        const response = await read('department', {deleteStatus: 0, id: dbId}, connection);
         return res.status(200).json(new ApiResponse(200, response, "Department retrieved successfully."))
     } catch (error) {
         console.error("Error in retrieving all department.");
