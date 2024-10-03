@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify"; // Make sure to install react-t
 import "react-toastify/dist/ReactToastify.css"; // Import CSS for styling
 import ToastNotification from "../../../components/helper/OnlineOffline.jsx"; // Adjust the import based on your folder structure
 import { Login } from "../../app/login.jsx";
+import { Dashboard } from "../../app/Dashboard.jsx";
 
 // Lazy-loaded components
 const NotFoundPage = lazy(() => import("../../NotFoundPage.jsx"));
@@ -35,6 +36,10 @@ function AdminRoute() {
         <Route
           path="/login"
           element={<Login />}
+        />
+        <Route
+          path="/dashboard"
+          element={<Dashboard />}
         />
         <Route
           path="*"

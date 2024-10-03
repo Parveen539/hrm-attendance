@@ -1169,6 +1169,10 @@ ul .btn-primary:not(:disabled):not(.disabled).active:focus {
     }
 }
 
+a {
+    text-decoration: none !important;
+}
+
 .avatar-group {
     display: -webkit-inline-box;
     display: -ms-inline-flexbox;
@@ -20197,7 +20201,7 @@ textarea.form-control {
 }
 
 .info-card {
-    background: #009efb;
+    background: #009efb !important;
     border: 1px solid #009efb;
     position: relative;
     overflow: hidden
@@ -24624,6 +24628,12 @@ body[data-layout-mode=dark] .alertify .ajs-header {
     left: -30%;
     top: 38%;
     z-index: 1
+}
+
+.employee-alert-box .alert-outline-success .employee-alert-request {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 @media(max-width:992px) {
