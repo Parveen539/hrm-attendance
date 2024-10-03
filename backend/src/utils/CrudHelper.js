@@ -27,6 +27,7 @@ export const create = (table, data, connection) => {
  * Read data from the database.
  */
 export const read = (table, conditions, connection) => {
+    
     return new Promise((resolve, reject) => {
         let sql = `SELECT * FROM ${mysql2.escapeId(table)}`;
         const values = [];

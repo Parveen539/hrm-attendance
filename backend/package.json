@@ -5,7 +5,8 @@
   "type": "module",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon -r dotenv/config --experimental-json-modules src/app.js"
+    "dev": "nodemon -r dotenv/config --experimental-json-modules src/app.js",
+    "debug" : "nodemon --inspect -r dotenv/config --experimental-json-modules src/app.js"
   },
   "keywords": [
     "Employee Attendance",

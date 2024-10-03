@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { employeeRegister, employeeRetrieveAll, employeeRetrieveByID, employeeUpdateByID } from '../../controllers/admin/employee.controller.js';
+//import { employeeRegister, employeeRetrieveAll, employeeRetrieveByID, employeeUpdateByID } from '../../controllers/admin/employee.controller.js';
 import { changePassword, forgetPassword, loginCheck, otpCheck, resetPassword } from "../../controllers/admin/login.controller.js";
 import { checkLogin } from "../../middlewares/checkLogin.js";
 

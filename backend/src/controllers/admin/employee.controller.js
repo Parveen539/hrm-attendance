@@ -8,37 +8,37 @@ import {sendEmail} from "../../utils/Helper.js"
 
 const employeeRegister = asyncHandler(async (req, res) => {
     const { 
-        firstname,
-        lastname,
-        dateofbirth,
-        gender,
-        contactnumber,
-        emailaddress,
-        address,
-        city,
-        district,
-        state,
-        postalcode,
-        maritalstatus,
-        emergencycontactno,
-        alternatecontactno,
-        department,
-        designation,
-        dateofjoining,
-        employeestatus,
-        bloodgroup,
-        aadhaar,
-        pan,
-        bankname,
-        ifsccode,
-        upidid,
-        accountno,
-        profilepic
+        FirstName,
+        LastName,
+        DateOfBirth,
+        Gender,
+        ContactNumber,
+        EmailAddress,
+        Address,
+        City,
+        District,
+        State,
+        PostalCode,
+        MaritalStatus,
+        EmergencyContactNo,
+        AlternateContactNo,
+        Department,
+        Designation,
+        DateOfJoining,
+        EmployeeStatus,
+        BloodGroup,
+        Aadhaar,
+        Pan,
+        BankName,
+        IFSCCode,
+        UPIDid,
+        AccountNo,
+        ProfilePic
     } = req.body;
 
     // Input validation
-    if (!firstname) return res.status(400).json(new ApiResponse(400, null, "Name is required."));
-    if (!dateofjoining) return res.status(400).json(new ApiResponse(400, null, "Join Date is required."));
+    if (!FirstName) return res.status(400).json(new ApiResponse(400, null, "Name is required."));
+    if (!DateOfJoining) return res.status(400).json(new ApiResponse(400, null, "Join Date is required."));
 
 
     try {
@@ -51,32 +51,32 @@ const employeeRegister = asyncHandler(async (req, res) => {
         const result = await create(
             'employee',
             { 
-                FirstName : firstname,
-                LastName : lastname,
-                DateOfBirth : dateofbirth,
-                Gender : gender,
-                ContactNumber : contactnumber,
-                EmailAddress : emailaddress,
-                Address : address,
-                City : city,
-                District : district,
-                State : state,
-                PostalCode : postalcode,
-                MaritalStatus : maritalstatus,
-                EmergencyContactNo : emergencycontactno,
-                AlternateContactNo : alternatecontactno,
-                Department : department,
-                Designation : designation,
-                DateOfJoining : dateofjoining,
-                EmployeeStatus : employeestatus,
-                BloodGroup : bloodgroup,
-                Aadhaar : aadhaar,
-                Pan : pan,
-                BankName : bankname,
-                IFSCCode : ifsccode,
-                UPIDid : upidid,
-                AccountNo : accountno,
-                ProfilePic : profilepic,
+                FirstName : FirstName,
+                LastName : LastName,
+                DateOfBirth : DateOfBirth,
+                Gender : Gender,
+                ContactNumber : ContactNumber,
+                EmailAddress : EmailAddress,
+                Address : Address,
+                City : City,
+                District : District,
+                State : State,
+                PostalCode : PostalCode,
+                MaritalStatus : MaritalStatus,
+                EmergencyContactNo : EmergencyContactNo,
+                AlternateContactNo : AlternateContactNo,
+                Department : Department,
+                Designation : Designation,
+                DateOfJoining : DateOfJoining,
+                EmployeeStatus : EmployeeStatus,
+                BloodGroup : BloodGroup,
+                Aadhaar : Aadhaar,
+                Pan : Pan,
+                BankName : BankName,
+                IFSCCode : IFSCCode,
+                UPIDid : UPIDid,
+                AccountNo : AccountNo,
+                ProfilePic : ProfilePic,
                 password : secPass         
             }, 
             connection
@@ -90,7 +90,7 @@ const employeeRegister = asyncHandler(async (req, res) => {
         
         res.status(201).json({
             message: 'Employee registered successfully',
-            employee: { id: result.insertId, firstname, lastname },
+            employee: { id: result.insertId, FirstName, LastName },
             //************Commented for testing */
             //emailStatus:mailRes
         });
@@ -116,36 +116,46 @@ const employeeRetrieveAll = asyncHandler(async (req, res) => {
     }
 });
 
-const employeeRetrieveByID = asyncHandler(async (req, res) => {
-    const { employeeid } = req.body;
+const employeeRetrieveFilteredRecords = asyncHandler(async (req, res) => {
+    const cols = Object.keys(req.body);
+    const vals = Object.values(req.body);
+    let conditionClauses = ``;
+    for (var keys in cols){
+        conditionClauses += `${cols[keys]} = '${vals[keys]}' AND `;
+    }
+    conditionClauses = conditionClauses.slice(0, -5);
+
     try {
-        const connection = connectDB(); 
-        const sql = `SELECT * FROM employee WHERE EmployeeID = ${employeeid}`;
+        const connection = connectDB();
+        
+        const sql = `SELECT * FROM employee WHERE ${conditionClauses};`;
+
         const result = await executeCustomQueryWithoutData(sql, connection);
         
-        //console.log(result.length());        
-        // Check if employee existed
-        if (Object.keys(result).length === 0) return res.status(404).json(new ApiResponse(404, null, `Employee with Employee ID ${employeeid} does not exist.`));
+        // //console.log(result.length());        
+        // // Check if employee existed
+        if (Object.keys(result).length === 0) return res.status(404).json(new ApiResponse(404, null, `Employee with Employee ID ${EmployeeId} does not exist.`));
 
-        res.status(200).json({
+        return res.status(200).json({
             result
         });
     } catch (error) {
         return res.status(500).json(new ApiResponse(500, null, "Internal server error."));
     }
+    
 });
 
 const employeeDeleteByID = asyncHandler(async (req, res) => {
-    const { employeeid } = req.body;
+    const { EmployeeId } = req.body;
     try {
         const connection = connectDB(); 
-        const sql = `DELETE * FROM employee WHERE EmployeeID = ${employeeid}`;
+        const sql = `DELETE * FROM employee WHERE EmployeeId = ${EmployeeId}`;
         const result = await executeCustomQuery(sql, connection);
         
         // Check if employee existed
-        if (Object.keys(result).length === 0) return res.status(404).json(new ApiResponse(404, null, `Employee with Employee ID ${employeeid} does not exist.`));
+        if (Object.keys(result).length === 0) return res.status(404).json(new ApiResponse(404, null, `Employee with Employee ID ${EmployeeId} does not exist.`));
 
-        res.status(204).json(new ApiResponse(204, null, `Employee ID ${employeeid} deleted successfully.`));
+        res.status(204).json(new ApiResponse(204, null, `Employee ID ${EmployeeId} deleted successfully.`));
     } catch (error) {
         return res.status(500).json(new ApiResponse(500, null, "Internal server error."));
     }
@@ -153,79 +163,79 @@ const employeeDeleteByID = asyncHandler(async (req, res) => {
 
 const employeeUpdateByID = asyncHandler(async (req, res) => {
     const { 
-        employeeid,
-        firstname,
-        lastname,
-        dateofbirth,
-        gender,
-        contactnumber,
-        emailaddress,
-        address,
-        city,
-        district,
-        state,
-        postalcode,
-        maritalstatus,
-        emergencycontactno,
-        alternatecontactno,
-        department,
-        designation,
-        dateofjoining,
-        employeestatus,
-        bloodgroup,
-        aadhaar,
-        pan,
-        bankname,
-        ifsccode,
-        upidid,
-        accountno,
-        profilepic,
+        EmployeeId,
+        FirstName,
+        LastName,
+        DateOfBirth,
+        Gender,
+        ContactNumber,
+        EmailAddress,
+        Address,
+        City,
+        District,
+        State,
+        PostalCode,
+        MaritalStatus,
+        EmergencyContactNo,
+        AlternateContactNo,
+        Department,
+        Designation,
+        DateOfJoining,
+        EmployeeStatus,
+        BloodGroup,
+        Aadhaar,
+        Pan,
+        BankName,
+        IFSCCode,
+        UPIDid,
+        AccountNo,
+        ProfilePic,
     } = req.body;
 
 
     try {
           const connection = connectDB(); 
         
-        let updatefields = `FirstName = '${firstname}', `;
-        updatefields += `LastName = '${lastname}', `;
-        updatefields += `DateOfBirth = '${dateofbirth}', `;
-        updatefields += `Gender = '${gender}', `;
-        updatefields += `ContactNumber = '${contactnumber}', `;
-        updatefields += `EmailAddress = '${emailaddress}', `;
-        updatefields += `Address = '${address}', `;
-        updatefields += `City = '${city}', `;
-        updatefields += `District = '${district}', `;
-        updatefields += `State = '${state}', `;
-        updatefields += `PostalCode = '${postalcode}', `;
-        updatefields += `MaritalStatus = '${maritalstatus}', `;
-        updatefields += `EmergencyContactNo = '${emergencycontactno}', `;
-        updatefields += `AlternateContactNo = '${alternatecontactno}', `;
-        updatefields += `Department = '${department}', `;
-        updatefields += `Designation = '${designation}', `;
-        updatefields += `DateOfJoining = '${dateofjoining}', `;
-        updatefields += `EmployeeStatus = '${employeestatus}', `;
-        updatefields += `BloodGroup = '${bloodgroup}', `;
-        updatefields += `Aadhaar = '${aadhaar}', `;
-        updatefields += `Pan = '${pan}', `;
-        updatefields += `BankName = '${bankname}', `;
-        updatefields += `IFSCCode = '${ifsccode}', `;
-        updatefields += `UPIDid = '${upidid}', `;
-        updatefields += `AccountNo = '${accountno}', `;
-        updatefields += `ProfilePic = '${profilepic}' `;
+        let updatefields = `FirstName = '${FirstName}', `;
+        updatefields += `LastName = '${LastName}', `;
+        updatefields += `DateOfBirth = '${DateOfBirth}', `;
+        updatefields += `Gender = '${Gender}', `;
+        updatefields += `ContactNumber = '${ContactNumber}', `;
+        updatefields += `EmailAddress = '${EmailAddress}', `;
+        updatefields += `Address = '${Address}', `;
+        updatefields += `City = '${City}', `;
+        updatefields += `District = '${District}', `;
+        updatefields += `State = '${State}', `;
+        updatefields += `PostalCode = '${PostalCode}', `;
+        updatefields += `MaritalStatus = '${MaritalStatus}', `;
+        updatefields += `EmergencyContactNo = '${EmergencyContactNo}', `;
+        updatefields += `AlternateContactNo = '${AlternateContactNo}', `;
+        updatefields += `Department = '${Department}', `;
+        updatefields += `Designation = '${Designation}', `;
+        updatefields += `DateOfJoining = '${DateOfJoining}', `;
+        updatefields += `EmployeeStatus = '${EmployeeStatus}', `;
+        updatefields += `BloodGroup = '${BloodGroup}', `;
+        updatefields += `Aadhaar = '${Aadhaar}', `;
+        updatefields += `Pan = '${Pan}', `;
+        updatefields += `BankName = '${BankName}', `;
+        updatefields += `IFSCCode = '${IFSCCode}', `;
+        updatefields += `UPIDid = '${UPIDid}', `;
+        updatefields += `AccountNo = '${AccountNo}', `;
+        updatefields += `ProfilePic = '${ProfilePic}' `;
         
         
 
-        const sql = `UPDATE employee SET ${updatefields} WHERE EmployeeId = ${employeeid}; `;
+        const sql = `UPDATE employee SET ${updatefields} WHERE EmployeeId = ${EmployeeId}; `;
         const result = await executeCustomQueryWithoutData(sql, connection);
         
     //     // Check if employee existed
-        //if (!result.affectedRows) return res.status(404).json(new ApiResponse(404, null, `Employee with Employee ID ${employeeid} does not exist.`));
+        //if (!result.affectedRows) return res.status(404).json(new ApiResponse(404, null, `Employee with Employee ID ${EmployeeId} does not exist.`));
 
-        res.status(204).json(new ApiResponse(204, null, `Employee ID ${employeeid} updated successfully.`));
+        res.status(204).json(new ApiResponse(204, null, `Employee ID ${EmployeeId} updated successfully.`));
     } catch (error) {
         return res.status(500).json(new ApiResponse(500, null, "Internal server error."));
     }
     
 });
 
-export { employeeRegister, employeeRetrieveAll, employeeRetrieveByID, employeeUpdateByID };
+export { employeeRegister, employeeRetrieveAll, employeeRetrieveFilteredRecords, employeeUpdateByID };

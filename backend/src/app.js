@@ -56,6 +56,9 @@ import valRoute from './routes/admin/validate.routes.js';
 import fileRouter from './routes/admin/file.routes.js';
 import batchRoute from './routes/admin/branch.routes.js';
 
+//****Temporary to Create Tables */
+import { tempTablesDefinition } from './tempDefTables/defineTables.js'
+
 const app = express();
 
 // Middleware for handling CORS, body parsing, static files, cookies, and logging
@@ -70,7 +73,9 @@ app.use(cookieParser());  // Parse cookies from incoming requests
 app.use(morgan('dev'));  // Log HTTP requests in development mode
 
 // Mount employee-related routes under the `/zarud-admin/api/v1/employee` namespace
+
 app.use("/zarud-admin/api/v1/employee", employeeRoute);
+
 app.use("/zarud-admin/api/v1/leave", leaveRoute);
 app.use("/zarud-admin/api/v1/validation",valRoute);
 app.use('/zarud-admin/api/v1/department', departmentRoute);
@@ -82,13 +87,20 @@ app.use('/zarud-admin/api/v1/designation', designationRoute);
 app.use('/zarud-admin/api/v1/download', fileRouter);
 app.use('/zarud-admin/api/v1/branch', batchRoute);
 
+//****Temporary to Create Tables */
+app.use('/zarud-admin/api/v1/database', tempTablesDefinition);
+
+
 // Global error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);  // Log the error stack trace
     res.status(500).json(new ApiResponse(500, null, "Something went wrong!"));  // Send structured API response
 });
 
+
+
 // Connect to the database and start the server
+//*************Commented temporarily as DB not available */
 const dbConnection = connectDB();  // Establish DB connection
 
 // Start the server and listen on specified port or default to 3000

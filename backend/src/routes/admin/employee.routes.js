@@ -1,11 +1,13 @@
 import { Router } from "express";
-import { employeeRegister, employeeRetrieveAll, employeeRetrieveByID, employeeUpdateByID } from '../../controllers/admin/employee.controller.js';
+import { employeeRetrieveAll, employeeRetrieveFilteredRecords, employeeRegister, employeeUpdateByID } from '../../controllers/admin/employee.controller.js';
 
 const employeeRoute = Router();
-// Save Employee
+
 employeeRoute.route("/retrieve-all-employees/").get(employeeRetrieveAll);
-employeeRoute.route("/retrieve-employee/").post(employeeRetrieveByID);
+employeeRoute.route("/retrieve-filtered-employee/").post(employeeRetrieveFilteredRecords);
 employeeRoute.route("/employee-register/").post(employeeRegister);
-employeeRoute.route("/update-employee").post(employeeUpdateByID);
+employeeRoute.route("/update-employee/").post(employeeUpdateByID);
+
+
 
 export default employeeRoute;
